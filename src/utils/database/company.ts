@@ -11,7 +11,8 @@ export async function createCompanyNode(
 		);
 
 		if (existingResult.records.length > 0) {
-			throw new Error(`Company with name "${name}" already exists.`);
+			console.error(`Company with name "${name}" already exists.`);
+			return;
 		}
 
 		await session.run('CREATE (c:Company {name: $name}) RETURN c', {
