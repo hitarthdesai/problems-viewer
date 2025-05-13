@@ -16,6 +16,8 @@ const problemDifficultySchema = z.enum([
 
 export const EnumProblemDifficulty = problemDifficultySchema.Enum;
 
+export type ProblemDifficulty = z.infer<typeof problemDifficultySchema>;
+
 export const problemSchema = z.object({
     Difficulty: problemDifficultySchema,
     Title: z.string(),

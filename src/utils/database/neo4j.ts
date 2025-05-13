@@ -12,8 +12,8 @@ export function createNeo4jDriver() {
 	return driver;
 }
 
-export function closeNeo4jDriver(driver: Driver) {
-	driver.close();
+export async function closeNeo4jDriver(driver: Driver) {
+	await driver.close();
 }
 
 export function createNeo4jSession(driver: Driver) {

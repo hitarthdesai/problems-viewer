@@ -23,7 +23,7 @@ export async function populateDatabase() {
 	} catch (error) {
 		console.error('Error populating database:', error);
 	} finally {
-        closeNeo4jSession(session);
-        closeNeo4jDriver(driver);
+        await closeNeo4jSession(session);
+        await closeNeo4jDriver(driver);
 	}
 }
