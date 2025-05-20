@@ -1,0 +1,30 @@
+type Problem @node {
+	id: ID!
+	title: String!
+	slug: String! @alias(property: "slug")
+	companies: [Company!]! @relationship(type: "ASKED", direction: IN)
+	difficulty: [Difficulty!]! @relationship(type: "HAS_DIFFICULTY", direction: OUT)
+	topics: [Topic!]! @relationship(type: "HAS_TOPIC", direction: OUT)
+}
+
+type Company @node {
+	id: ID!
+	name: String!
+	problems: [Problem!]! @relationship(type: "ASKED", direction: OUT)
+}
+
+enum ProblemDifficulty {
+    EASY
+    MEDIUM
+    HARD
+}
+
+type Difficulty @node {
+	name: ProblemDifficulty!
+	problems: [Problem!]! @relationship(type: "HAS_DIFFICULTY", direction: IN)
+}
+
+type Topic @node {
+	name: String!
+	problems: [Problem!]! @relationship(type: "HAS_TOPIC", direction: IN)
+}

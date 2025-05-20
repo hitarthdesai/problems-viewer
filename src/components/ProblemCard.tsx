@@ -13,7 +13,6 @@ import {
 } from '@/schemas/dataset';
 
 type ProblemCardProps = {
-	id: string;
 	title: string;
 	difficulty: ProblemDifficulty;
 	topics: string[];
@@ -29,7 +28,6 @@ const difficultyColor = {
 };
 
 export function ProblemCard({
-	id,
 	title,
 	difficulty,
 	topics,
