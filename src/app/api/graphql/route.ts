@@ -10,9 +10,8 @@ import gql from 'graphql-tag';
 
 const driver = createNeo4jDriver();
 const typeDefs = gql(
-  readFileSync(join(process.cwd(), 'src/schemas/graphql/schema.gql'), 'utf-8')
+  readFileSync(join(process.cwd(), 'src/graphql/schema.graphql'), 'utf-8')
 );
-// const typeDefs = readFileSync(join(process.cwd(), 'src/schemas/graphql/schema.gql'), 'utf-8')
 
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 const schema = await neoSchema.getSchema();

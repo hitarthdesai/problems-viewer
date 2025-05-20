@@ -1,30 +1,45 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+"use client"
+
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import {
+	ApolloClient,
+	ApolloProvider,
+	InMemoryCache,
+} from '@apollo/react-hooks';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+	variable: '--font-geist-sans',
+	subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+	variable: '--font-geist-mono',
+	subsets: ['latin'],
+});
+
+const client = new ApolloClient({
+	uri: "http://localhost:3000/api/graphql",
+	cache: new InMemoryCache(),
 });
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen max-h-screen flex-col pb-4`}
-      > 
-          {/* <SiteHeader /> */}
-          <div className="grow">{children}</div>
-          {/* <Toaster /> */}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en" className="dark">
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen max-h-screen flex-col items-center pb-4`}
+			>
+				<ApolloProvider client={client}>
+					{/* <SiteHeader /> */}
+
+					<div className="grow container">{children}</div>
+					{/* <Toaster /> */}
+				</ApolloProvider>
+			</body>
+		</html>
+	);
 }
