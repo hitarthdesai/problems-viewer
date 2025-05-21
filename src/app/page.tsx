@@ -13,9 +13,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { HomepageTopics } from '@/components/HomepageTopics';
+import { HomepageProblems } from '@/components/HomepageProblems';
 
 const topCompanies = [
 	{
@@ -60,51 +60,10 @@ const topCompanies = [
 	},
 ];
 
-const trendingProblems = [
-	{
-		title: 'Two Sum',
-		companies: ['Google', 'Amazon', 'Microsoft'],
-		difficulty: 'Easy',
-	},
-	{
-		title: 'LRU Cache',
-		companies: ['Meta', 'Uber', 'Bloomberg'],
-		difficulty: 'Medium',
-	},
-	{
-		title: 'Merge K Sorted Lists',
-		companies: ['Amazon', 'Google'],
-		difficulty: 'Hard',
-	},
-	{
-		title: 'Valid Parentheses',
-		companies: ['Microsoft', 'Amazon'],
-		difficulty: 'Easy',
-	},
-	{
-		title: 'Trapping Rain Water',
-		companies: ['Google', 'Meta', 'Apple'],
-		difficulty: 'Hard',
-	},
-];
-
 const recentUpdates = [
 	{ company: 'Uber', count: 12, date: 'May 15, 2024' },
 	{ company: 'Airbnb', count: 8, date: 'May 12, 2024' },
 	{ company: 'Stripe', count: 15, date: 'May 10, 2024' },
-];
-
-const topics = [
-	'Arrays',
-	'Strings',
-	'Linked Lists',
-	'Trees',
-	'Graphs',
-	'Dynamic Programming',
-	'Sorting',
-	'Searching',
-	'Greedy',
-	'Backtracking',
 ];
 
 export default function HomePage() {
@@ -210,54 +169,17 @@ export default function HomePage() {
 						</h2>
 						<Link
 							href="#"
-							className="text-sm font-medium flex items-center"
+							// className="text-sm font-medium flex items-center"
 						>
-							View all problems{' '}
+							<Button variant="link">
+
+							View all problems
 							<ChevronRight className="ml-1 h-4 w-4" />
+							</Button>
 						</Link>
 					</div>
 					<div className="space-y-4">
-						{trendingProblems.map((problem, index) => (
-							<Link href="#" key={problem.title}>
-								<Card className="hover:bg-muted/50 transition-colors">
-									<CardContent className="p-4 flex items-center">
-										<div className="mr-4 text-xl font-bold text-muted-foreground">
-											{index + 1}
-										</div>
-										<div className="flex-1">
-											<h3 className="font-medium">
-												{problem.title}
-											</h3>
-											<div className="flex flex-wrap gap-2 mt-1">
-												{problem.companies.map(
-													company => (
-														<Badge
-															key={company}
-															variant="outline"
-															className="text-xs"
-														>
-															{company}
-														</Badge>
-													)
-												)}
-											</div>
-										</div>
-										<Badge
-											className={
-												problem.difficulty === 'Easy'
-													? 'bg-green-500'
-													: problem.difficulty ===
-													  'Medium'
-													? 'bg-yellow-500'
-													: 'bg-red-500'
-											}
-										>
-											{problem.difficulty}
-										</Badge>
-									</CardContent>
-								</Card>
-							</Link>
-						))}
+						<HomepageProblems />
 					</div>
 				</section>
 

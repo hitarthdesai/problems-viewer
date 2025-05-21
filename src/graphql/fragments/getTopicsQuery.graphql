@@ -1,5 +1,5 @@
-  query GetTopics {
-    topics {
-      name
-    }
+query GetTopics {
+  topics {
+    name
   }
+}

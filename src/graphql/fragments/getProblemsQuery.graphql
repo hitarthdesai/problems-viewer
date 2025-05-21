@@ -1,0 +1,9 @@
+query GetProblems($offset: Int, $limit: Int) {
+  problems(offset: $offset, limit: $limit) {
+    slug
+    title
+    difficulty {
+      name
+    }
+  }
+}

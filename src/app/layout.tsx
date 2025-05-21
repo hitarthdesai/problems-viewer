@@ -20,8 +20,26 @@ const geistMono = Geist_Mono({
 
 const client = new ApolloClient({
 	uri: "http://localhost:3000/api/graphql",
-	cache: new InMemoryCache(),
-});
+	cache: new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        feed: {
+          keyArgs: false,
+          merge(existing, incoming, { args }) {
+			const _offset = args?.get("offset")
+			const offset = typeof _offset === "number" ? _offset : 0;
+            const merged = existing ? existing.slice(0) : [];
+            for (let i = 0; i < incoming.length; ++i) {
+              merged[offset + i] = incoming[i];
+            }
+            return merged;
+          },
+        },
+      },
+    },
+  },
+})});
 
 export default function RootLayout({
 	children,
