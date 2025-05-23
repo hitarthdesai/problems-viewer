@@ -1,70 +1,12 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import {
-	Search,
-	Star,
-	Clock,
-	BookOpen,
-	BarChart3,
-	Tag,
-	ChevronRight,
-} from 'lucide-react';
+import { Search, BookOpen, BarChart3, Tag, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { HomepageTopics } from '@/components/HomepageTopics';
 import { HomepageProblems } from '@/components/HomepageProblems';
-
-const topCompanies = [
-	{
-		name: 'Google',
-		problems: 145,
-		lastUpdated: '2 days ago',
-	},
-	{
-		name: 'Amazon',
-		problems: 132,
-		lastUpdated: '1 week ago',
-	},
-	{
-		name: 'Microsoft',
-		problems: 118,
-		lastUpdated: '3 days ago',
-	},
-	{
-		name: 'Meta',
-		problems: 105,
-		lastUpdated: '5 days ago',
-	},
-	{
-		name: 'Apple',
-		problems: 92,
-		lastUpdated: '1 day ago',
-	},
-	{
-		name: 'Bloomberg',
-		problems: 87,
-		lastUpdated: '4 days ago',
-	},
-	{
-		name: 'Uber',
-		problems: 76,
-		lastUpdated: '1 week ago',
-	},
-	{
-		name: 'Airbnb',
-		problems: 68,
-		lastUpdated: '2 weeks ago',
-	},
-];
-
-const recentUpdates = [
-	{ company: 'Uber', count: 12, date: 'May 15, 2024' },
-	{ company: 'Airbnb', count: 8, date: 'May 12, 2024' },
-	{ company: 'Stripe', count: 15, date: 'May 10, 2024' },
-];
+import { HomepageCompanies } from '@/components/HomepageCompanies';
 
 export default function HomePage() {
 	return (
@@ -116,172 +58,49 @@ export default function HomePage() {
 					</div>
 				</section>
 
-				{/* Top Companies Section */}
-				<section>
-					<div className="flex items-center justify-between mb-6">
+				<section className="w-full">
+					<div className="flex items-center justify-between mb-6 w-full">
 						<h2 className="text-2xl font-bold tracking-tight">
 							Top Companies
 						</h2>
-						<Link
-							href="#"
-							className="text-sm font-medium flex items-center"
-						>
-							View all companies{' '}
-							<ChevronRight className="ml-1 h-4 w-4" />
-						</Link>
-					</div>
-					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-						{topCompanies.map(company => (
-							<Link href="#" key={company.name}>
-								<Card className="h-full hover:bg-muted/50 transition-colors">
-									<CardContent className="p-4 flex flex-col items-center text-center">
-										<div className="mb-3 mt-2 flex h-12 w-12 items-center justify-center">
-											{/* <Image
-												src={
-													company.logo ||
-													'/placeholder.svg'
-												}
-												alt={company.name}
-												width={40}
-												height={40}
-												className="rounded-md"
-											/> */}
-										</div>
-										<h3 className="font-medium">
-											{company.name}
-										</h3>
-										<p className="text-xs text-muted-foreground mt-1">
-											{company.problems} problems •
-											Updated {company.lastUpdated}
-										</p>
-									</CardContent>
-								</Card>
-							</Link>
-						))}
-					</div>
-				</section>
-
-				{/* Trending Problems Section */}
-				<section>
-					<div className="flex items-center justify-between mb-6">
-						<h2 className="text-2xl font-bold tracking-tight">
-							Trending Problems
-						</h2>
-						<Link
-							href="#"
-							// className="text-sm font-medium flex items-center"
-						>
+						<Link href="/companies">
 							<Button variant="link">
-
-							View all problems
-							<ChevronRight className="ml-1 h-4 w-4" />
+								View all companies
+								<ChevronRight className="ml-1 h-4 w-4" />
 							</Button>
 						</Link>
 					</div>
-					<div className="space-y-4">
-						<HomepageProblems />
-					</div>
+					<HomepageCompanies />
 				</section>
 
-				{/* By Difficulty or Topic Section */}
-				<section>
-					<h2 className="text-2xl font-bold tracking-tight mb-6">
-						Explore by Category
-					</h2>
-					<Tabs defaultValue="difficulty">
-						<TabsList className="mb-4">
-							<TabsTrigger value="difficulty">
-								Difficulty
-							</TabsTrigger>
-							<TabsTrigger value="topics">Topics</TabsTrigger>
-						</TabsList>
-						<TabsContent value="difficulty" className="space-y-4">
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-								<Card className="hover:bg-muted/50 transition-colors border-green-200">
-									<CardContent className="p-6 flex items-center">
-										<div className="mr-4 p-2 rounded-full bg-green-100">
-											<Star className="h-5 w-5 text-green-500" />
-										</div>
-										<div>
-											<h3 className="font-medium">
-												Easy
-											</h3>
-											<p className="text-sm text-muted-foreground">
-												428 problems
-											</p>
-										</div>
-									</CardContent>
-								</Card>
-								<Card className="hover:bg-muted/50 transition-colors border-yellow-200">
-									<CardContent className="p-6 flex items-center">
-										<div className="mr-4 p-2 rounded-full bg-yellow-100">
-											<Star className="h-5 w-5 text-yellow-500" />
-										</div>
-										<div>
-											<h3 className="font-medium">
-												Medium
-											</h3>
-											<p className="text-sm text-muted-foreground">
-												732 problems
-											</p>
-										</div>
-									</CardContent>
-								</Card>
-								<Card className="hover:bg-muted/50 transition-colors border-red-200">
-									<CardContent className="p-6 flex items-center">
-										<div className="mr-4 p-2 rounded-full bg-red-100">
-											<Star className="h-5 w-5 text-red-500" />
-										</div>
-										<div>
-											<h3 className="font-medium">
-												Hard
-											</h3>
-											<p className="text-sm text-muted-foreground">
-												294 problems
-											</p>
-										</div>
-									</CardContent>
-								</Card>
-							</div>
-						</TabsContent>
-						<TabsContent value="topics">
-							<HomepageTopics />
-						</TabsContent>
-					</Tabs>
+				<section className="w-full">
+					<div className="flex items-center justify-between mb-6 w-full">
+						<h2 className="text-2xl font-bold tracking-tight">
+							Trending Problems
+						</h2>
+						<Link href="/problems">
+							<Button variant="link">
+								View all problems
+								<ChevronRight className="ml-1 h-4 w-4" />
+							</Button>
+						</Link>
+					</div>
+					<HomepageProblems />
 				</section>
 
-				{/* Recent Dataset Updates */}
-				<section>
-					<h2 className="text-2xl font-bold tracking-tight mb-6">
-						Recent Updates
-					</h2>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-						{recentUpdates.map(update => (
-							<Card
-								key={update.company}
-								className="hover:bg-muted/50 transition-colors"
-							>
-								<CardContent className="p-4">
-									<div className="flex items-center mb-2">
-										<Clock className="mr-2 h-4 w-4 text-muted-foreground" />
-										<span className="text-sm text-muted-foreground">
-											{update.date}
-										</span>
-									</div>
-									<p className="font-medium">
-										We just added {update.count} problems
-										asked by {update.company} in 2024
-									</p>
-									<Link
-										href="#"
-										className="text-sm text-primary mt-2 inline-block"
-									>
-										View problems →
-									</Link>
-								</CardContent>
-							</Card>
-						))}
+				<section className="w-full">
+					<div className="flex items-center justify-between mb-6 w-full">
+						<h2 className="text-2xl font-bold tracking-tight">
+							Explore by Topic
+						</h2>
+						<Link href="/topics">
+							<Button variant="link">
+								View all problems
+								<ChevronRight className="ml-1 h-4 w-4" />
+							</Button>
+						</Link>
 					</div>
+					<HomepageTopics />
 				</section>
 
 				{/* Why Use This Site */}

@@ -1,5 +1,5 @@
 type Problem @node {
-	id: ID!
+	id: ID! @cypher(statement: "RETURN id(this) as id", columnName: "id")
 	title: String!
 	slug: String! @alias(property: "slug")
 	companies: [Company!]! @relationship(type: "ASKED", direction: IN)
@@ -8,9 +8,10 @@ type Problem @node {
 }
 
 type Company @node {
-	id: ID!
+	id: ID! @cypher(statement: "RETURN id(this) as id", columnName: "id")
 	name: String!
 	problems: [Problem!]! @relationship(type: "ASKED", direction: OUT)
+	problemCount: Int! @cypher(statement: "RETURN COUNT {(this)-[:ASKED]->(:Problem)} as problemCount", columnName: "problemCount")
 }
 
 enum ProblemDifficulty {
@@ -20,11 +21,13 @@ enum ProblemDifficulty {
 }
 
 type Difficulty @node {
+	id: ID! @cypher(statement: "RETURN id(this) as id", columnName: "id")
 	name: ProblemDifficulty!
 	problems: [Problem!]! @relationship(type: "HAS_DIFFICULTY", direction: IN)
 }
 
 type Topic @node {
+	id: ID! @cypher(statement: "RETURN id(this) as id", columnName: "id")
 	name: String!
 	problems: [Problem!]! @relationship(type: "HAS_TOPIC", direction: IN)
 }

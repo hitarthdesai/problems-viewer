@@ -28,6 +28,7 @@ export type Company = {
   __typename?: 'Company';
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  problemCount: Scalars['Int']['output'];
   problems: Array<Problem>;
   problemsConnection: CompanyProblemsConnection;
 };
@@ -68,7 +69,6 @@ export type CompanyConnectWhere = {
 };
 
 export type CompanyCreateInput = {
-  id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
   problems?: InputMaybe<CompanyProblemsFieldInput>;
 };
@@ -218,10 +218,10 @@ export type CompanyRelationshipFilters = {
 export type CompanySort = {
   id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
+  problemCount?: InputMaybe<SortDirection>;
 };
 
 export type CompanyUpdateInput = {
-  id?: InputMaybe<IdScalarMutations>;
   name?: InputMaybe<StringScalarMutations>;
   problems?: InputMaybe<Array<CompanyProblemsUpdateFieldInput>>;
 };
@@ -232,6 +232,7 @@ export type CompanyWhere = {
   OR?: InputMaybe<Array<CompanyWhere>>;
   id?: InputMaybe<IdScalarFilters>;
   name?: InputMaybe<StringScalarFilters>;
+  problemCount?: InputMaybe<IntScalarFilters>;
   problems?: InputMaybe<ProblemRelationshipFilters>;
   problemsConnection?: InputMaybe<CompanyProblemsConnectionFilters>;
 };
@@ -300,6 +301,7 @@ export type DifficultiesConnection = {
 
 export type Difficulty = {
   __typename?: 'Difficulty';
+  id: Scalars['ID']['output'];
   name: ProblemDifficulty;
   problems: Array<Problem>;
   problemsConnection: DifficultyProblemsConnection;
@@ -482,6 +484,7 @@ export type DifficultyRelationshipFilters = {
 
 /** Fields to sort Difficulties by. The order in which sorts are applied is not guaranteed when specifying many fields in one DifficultySort object. */
 export type DifficultySort = {
+  id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
 };
 
@@ -494,6 +497,7 @@ export type DifficultyWhere = {
   AND?: InputMaybe<Array<DifficultyWhere>>;
   NOT?: InputMaybe<DifficultyWhere>;
   OR?: InputMaybe<Array<DifficultyWhere>>;
+  id?: InputMaybe<IdScalarFilters>;
   name?: InputMaybe<ProblemDifficultyEnumScalarFilters>;
   problems?: InputMaybe<ProblemRelationshipFilters>;
   problemsConnection?: InputMaybe<DifficultyProblemsConnectionFilters>;
@@ -516,11 +520,6 @@ export type IdScalarFilters = {
   eq?: InputMaybe<Scalars['ID']['input']>;
   in?: InputMaybe<Array<Scalars['ID']['input']>>;
   startsWith?: InputMaybe<Scalars['ID']['input']>;
-};
-
-/** ID mutations */
-export type IdScalarMutations = {
-  set?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Int filters */
@@ -826,7 +825,6 @@ export type ProblemConnectWhere = {
 export type ProblemCreateInput = {
   companies?: InputMaybe<ProblemCompaniesFieldInput>;
   difficulty?: InputMaybe<ProblemDifficultyFieldInput>;
-  id: Scalars['ID']['input'];
   slug: Scalars['String']['input'];
   title: Scalars['String']['input'];
   topics?: InputMaybe<ProblemTopicsFieldInput>;
@@ -1101,7 +1099,6 @@ export type ProblemTopicsUpdateFieldInput = {
 export type ProblemUpdateInput = {
   companies?: InputMaybe<Array<ProblemCompaniesUpdateFieldInput>>;
   difficulty?: InputMaybe<Array<ProblemDifficultyUpdateFieldInput>>;
-  id?: InputMaybe<IdScalarMutations>;
   slug?: InputMaybe<StringScalarMutations>;
   title?: InputMaybe<StringScalarMutations>;
   topics?: InputMaybe<Array<ProblemTopicsUpdateFieldInput>>;
@@ -1243,6 +1240,7 @@ export type StringScalarMutations = {
 
 export type Topic = {
   __typename?: 'Topic';
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   problems: Array<Problem>;
   problemsConnection: TopicProblemsConnection;
@@ -1431,6 +1429,7 @@ export type TopicRelationshipFilters = {
 
 /** Fields to sort Topics by. The order in which sorts are applied is not guaranteed when specifying many fields in one TopicSort object. */
 export type TopicSort = {
+  id?: InputMaybe<SortDirection>;
   name?: InputMaybe<SortDirection>;
 };
 
@@ -1443,6 +1442,7 @@ export type TopicWhere = {
   AND?: InputMaybe<Array<TopicWhere>>;
   NOT?: InputMaybe<TopicWhere>;
   OR?: InputMaybe<Array<TopicWhere>>;
+  id?: InputMaybe<IdScalarFilters>;
   name?: InputMaybe<StringScalarFilters>;
   problems?: InputMaybe<ProblemRelationshipFilters>;
   problemsConnection?: InputMaybe<TopicProblemsConnectionFilters>;
@@ -1489,6 +1489,14 @@ export type UpdateTopicsMutationResponse = {
   topics: Array<Topic>;
 };
 
+export type GetCompaniesQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetCompaniesQuery = { __typename?: 'Query', companies: Array<{ __typename?: 'Company', id: string, name: string, problemCount: number }> };
+
 export type GetProblemsQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1497,11 +1505,15 @@ export type GetProblemsQueryVariables = Exact<{
 
 export type GetProblemsQuery = { __typename?: 'Query', problems: Array<{ __typename?: 'Problem', slug: string, title: string, difficulty: Array<{ __typename?: 'Difficulty', name: ProblemDifficulty }> }> };
 
-export type GetTopicsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTopicsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
 
 
 export type GetTopicsQuery = { __typename?: 'Query', topics: Array<{ __typename?: 'Topic', name: string }> };
 
 
+export const GetCompaniesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCompanies"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"companies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"problemCount"}}]}}]}}]} as unknown as DocumentNode<GetCompaniesQuery, GetCompaniesQueryVariables>;
 export const GetProblemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProblems"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"problems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetProblemsQuery, GetProblemsQueryVariables>;
-export const GetTopicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTopics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetTopicsQuery, GetTopicsQueryVariables>;
+export const GetTopicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTopics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetTopicsQuery, GetTopicsQueryVariables>;
