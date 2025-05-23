@@ -1,5 +1,5 @@
-query GetTopics {
-  topics {
+query GetTopics($limit: Int, $offset: Int) {
+  topics(limit: $limit, offset: $offset) {
     name
   }
 }
