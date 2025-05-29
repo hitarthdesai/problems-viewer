@@ -8,7 +8,7 @@ const allFiles = [
 	'3. Six Months.csv',
 	'4. More Than Six Months.csv',
 	'5. All.csv',
-].map(file => file.replace(/\s/g, '%20'));
+].map(file => file.replaceAll(/\s/g, '%20'));
 
 export async function getCompanyProblems(companyName: string) {
 	const parsedProblems: Problem[] = [];
@@ -42,7 +42,7 @@ export async function getCompanyProblems(companyName: string) {
 					if (header === 'Topics') {
 						const topics = values
 							.slice(index)
-							.map(value => value.replace(/"/g, '').trim());
+							.map(value => value.replaceAll(/"/g, '').trim());
 						obj[header] = topics;
 					} else if (header === 'Link') {
 						const slug = values?.[index]?.split('/')?.pop();
