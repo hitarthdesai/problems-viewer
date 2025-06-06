@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -7,6 +7,7 @@ import {
 	ApolloProvider,
 	InMemoryCache,
 } from '@apollo/react-hooks';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -19,27 +20,29 @@ const geistMono = Geist_Mono({
 });
 
 const client = new ApolloClient({
-	uri: "http://localhost:3000/api/graphql",
+	uri: 'http://localhost:3000/api/graphql',
 	cache: new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        feed: {
-          keyArgs: false,
-          merge(existing, incoming, { args }) {
-			const _offset = args?.get("offset")
-			const offset = typeof _offset === "number" ? _offset : 0;
-            const merged = existing ? existing.slice(0) : [];
-            for (let i = 0; i < incoming.length; ++i) {
-              merged[offset + i] = incoming[i];
-            }
-            return merged;
-          },
-        },
-      },
-    },
-  },
-})});
+		typePolicies: {
+			Query: {
+				fields: {
+					feed: {
+						keyArgs: false,
+						merge(existing, incoming, { args }) {
+							const _offset = args?.get('offset');
+							const offset =
+								typeof _offset === 'number' ? _offset : 0;
+							const merged = existing ? existing.slice(0) : [];
+							for (let i = 0; i < incoming.length; ++i) {
+								merged[offset + i] = incoming[i];
+							}
+							return merged;
+						},
+					},
+				},
+			},
+		},
+	}),
+});
 
 export default function RootLayout({
 	children,
@@ -52,10 +55,11 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased flex h-screen max-h-screen flex-col items-center pb-4`}
 			>
 				<ApolloProvider client={client}>
-					{/* <SiteHeader /> */}
-
-					<div className="grow container">{children}</div>
-					{/* <Toaster /> */}
+					<QueryClientProvider client={new QueryClient()}>
+						{/* <SiteHeader /> */}
+						<div className="grow container">{children}</div>
+						{/* <Toaster /> */}
+					</QueryClientProvider>
 				</ApolloProvider>
 			</body>
 		</html>

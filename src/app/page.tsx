@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { Search, BookOpen, BarChart3, Tag, ChevronRight } from 'lucide-react';
+import {  BookOpen, BarChart3, Tag, ChevronRight, Search } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { HomepageTopics } from '@/components/HomepageTopics';
-import { HomepageProblems } from '@/components/HomepageProblems';
-import { HomepageCompanies } from '@/components/HomepageCompanies';
+import { HomepageTopics } from '@/components/homepage/HomepageTopics';
+import { HomepageProblems } from '@/components/homepage/HomepageProblems';
+import { HomepageCompanies } from '@/components/homepage/HomepageCompanies';
+import { HomepageSearch } from '@/components/homepage/HomepageSearch';
 
 export default function HomePage() {
 	return (
@@ -35,8 +34,7 @@ export default function HomePage() {
 				</div>
 			</header>
 			<main className="flex-1 py-8 md:py-12 gap-8 md:gap-12 flex flex-col items-center">
-				<section>
-					<div className="mx-auto max-w-3xl text-center">
+				<section className="flex flex-col mx-auto max-w-3xl text-center">
 						<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
 							Find Interview Questions from Top Companies
 						</h1>
@@ -44,21 +42,13 @@ export default function HomePage() {
 							Free access to thousands of real coding interview
 							questions asked by leading tech companies
 						</p>
-						<div className="mt-6 flex items-center w-full max-w-md mx-auto relative">
-							<Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
-							<Input
-								type="search"
-								placeholder="Search companies or problems..."
-								className="pl-10 pr-4 py-6 text-base"
-							/>
-						</div>
+							<HomepageSearch />
 						<p className="mt-2 text-sm text-muted-foreground">
-							Start typing to explore or try "Google Two Sum"
+							Start typing to explore or try "Google"
 						</p>
-					</div>
 				</section>
 
-				<section className="w-full">
+				{/* <section className="w-full">
 					<div className="flex items-center justify-between mb-6 w-full">
 						<h2 className="text-2xl font-bold tracking-tight">
 							Top Companies
@@ -101,7 +91,7 @@ export default function HomePage() {
 						</Link>
 					</div>
 					<HomepageTopics />
-				</section>
+				</section> */}
 
 				{/* Why Use This Site */}
 				<section>
